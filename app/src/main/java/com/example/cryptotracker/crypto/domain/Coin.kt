@@ -1,5 +1,7 @@
 package com.example.cryptotracker.crypto.domain
 
+
+
 data class Coin(
     val id : String,
     val rank : Int,
