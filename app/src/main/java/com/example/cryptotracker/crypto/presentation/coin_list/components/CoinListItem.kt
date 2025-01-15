@@ -28,6 +28,7 @@ import com.example.cryptotracker.crypto.domain.Coin
 import com.example.cryptotracker.crypto.presentation.models.CoinUi
 import com.example.cryptotracker.crypto.presentation.models.toCoinUi
 import com.example.cryptotracker.ui.theme.CryptoTrackerTheme
+import com.example.cryptotracker.ui.theme.greenBackground
 import io.ktor.websocket.Frame
 import kotlin.math.log
 
@@ -54,7 +55,7 @@ fun CoinListItem(
         Icon(
             imageVector = ImageVector.vectorResource(id = coinUi.iconRes),
             contentDescription = coinUi.name,
-            tint = MaterialTheme.colorScheme.primary,
+            tint = greenBackground,
             modifier = Modifier.size(85.dp)
         )
         Column(modifier = Modifier.weight(1f)) {
