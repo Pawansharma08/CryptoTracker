@@ -34,12 +34,7 @@ fun PriceChange(
     change: DisplayNumber,
     modifier: Modifier = Modifier,
 ) {
-    // Define colors for positive and negative values
-    val contentColor = if (change.value < 0.0) {
-        MaterialTheme.colorScheme.onError // Text color for negative values
-    } else {
-        MaterialTheme.colorScheme.onPrimary // Text color for positive values
-    }
+    val contentColor = Color.White
 
     val backgroundColor = if (change.value < 0.0) {
         errorLight // Background for negative values
