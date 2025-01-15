@@ -7,11 +7,11 @@ plugins {
 
 
 android {
-    namespace = "com.plcoding.cryptotracker"
+    namespace = "com.example.cryptotracker"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.plcoding.cryptotracker"
+        applicationId = "com.example.cryptotracker"
         minSdk = 26
         targetSdk = 35
         versionCode = 1
@@ -25,7 +25,7 @@ android {
 
     buildTypes {
         debug{
-            buildConfigField("String", "BASE_URL", "https://api.coingecko.com/api/v2/")
+            buildConfigField("String", "BASE_URL", "\"https://api.coincap.io/v2/\"")
         }
         release {
             isMinifyEnabled = false
@@ -33,7 +33,7 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
-            buildConfigField("String", "BASE_URL", "https://api.coingecko.com/api/v2/")
+            buildConfigField("String", "BASE_URL", "\"https://api.coincap.io/v2/\"")
         }
     }
     compileOptions {

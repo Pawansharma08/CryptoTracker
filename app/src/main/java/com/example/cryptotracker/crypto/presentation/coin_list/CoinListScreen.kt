@@ -54,7 +54,7 @@ fun CoinListScreen(
 
 }
 
-@PreviewLightDark
+@Preview
 @Composable
 private fun CoinListScreenPreview() {
     CryptoTrackerTheme {

@@ -1,6 +1,6 @@
 package com.example.cryptotracker.core.presentation.util
 
-import com.plcoding.cryptotracker.R
+import com.example.cryptotracker.R
 
 
 fun getDrawableIdForCoin(symbol: String): Int {
