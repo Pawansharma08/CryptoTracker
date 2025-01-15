@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">CryptoTracker</string>
+    <string name="error_request_timeout">the reequest timed out.\n</string>
+    <string name="error_too_many_requests">Oops, it seems too many request! try again latter\n</string>
+    <string name="error_no_internet">Check you Internet Connection!!</string>
+    <string name="error_server">Something went wrong.</string>
+    <string name="error_serialization">data is not in proper format</string>
+    <string name="error_unknown">Unkonwn</string>
 </resources>
