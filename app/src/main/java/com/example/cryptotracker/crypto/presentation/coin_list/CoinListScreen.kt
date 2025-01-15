@@ -25,22 +25,22 @@ fun CoinListScreen(
     state: CoinListState,
     modifier: Modifier = Modifier
 ) {
-    if(state.isLoading){
+    if (state.isLoading) {
         Box(
             modifier = modifier
                 .fillMaxSize(),
             contentAlignment = Alignment.Center
-        ){
+        ) {
             CircularProgressIndicator()
         }
 
-    }else{
+    } else {
         LazyColumn(
             modifier = modifier
                 .fillMaxSize(),
             verticalArrangement = Arrangement.spacedBy(8.dp),
         ) {
-            items(state.coins){ coinUi ->
+            items(state.coins) { coinUi ->
                 CoinListItem(
                     coinUi = coinUi,
                     onClick = {},
@@ -51,7 +51,6 @@ fun CoinListScreen(
             }
         }
     }
-
 }
 
 @PreviewLightDark
@@ -67,5 +66,5 @@ private fun CoinListScreenPreview() {
             modifier = Modifier
                 .background(MaterialTheme.colorScheme.background))
     }
-    
+
 }
