@@ -53,7 +53,7 @@ class RemoteCoinDataSource(
             {
                 parameter("interval", "h6")
                 parameter("start", startMillis)
-                parameter("end",startMillis)
+                parameter("end",endMillis)
             }
         }.map { response ->
             response.data.map { it.toCoinPrice() }
