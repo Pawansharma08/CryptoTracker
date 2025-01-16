@@ -6,4 +6,7 @@
     <string name="error_server">Something went wrong.</string>
     <string name="error_serialization">data is not in proper format</string>
     <string name="error_unknown">Unkonwn</string>
+    <string name="market_cap">Market Cap\n</string>
+    <string name="price">Price\n</string>
+    <string name="change_last_24h">Change last 24h\n</string>
 </resources>

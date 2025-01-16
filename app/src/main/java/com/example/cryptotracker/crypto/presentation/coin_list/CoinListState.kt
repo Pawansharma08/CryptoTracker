@@ -7,5 +7,5 @@ import com.example.cryptotracker.crypto.presentation.models.CoinUi
 data class CoinListState(
     val isLoading : Boolean = false,
     val coins : List<CoinUi> = emptyList(),
-    val selectedCoin : String? = null
+    val selectedCoin : CoinUi? = null
 )
