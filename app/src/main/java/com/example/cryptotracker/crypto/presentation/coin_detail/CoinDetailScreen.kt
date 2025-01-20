@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -133,55 +134,61 @@ fun CoinDetailScreen(
                     contentColor = contentColor
                 )
             }
-            AnimatedVisibility(
-                visible = coin.coinPriceHistory.isNotEmpty()
-            ) {
-                var selectedDataPoint by remember{
-                    mutableStateOf<DataPoint?>(null)
-                }
-                var labelWidth by remember {
-                    mutableStateOf(0f)
-                }
-                var totalChartWidth by remember {
-                    mutableFloatStateOf(0f)
-                }
-                val amountOfVisibleDataPoints = if(labelWidth > 0){
-                    ((totalChartWidth - 2.5 * labelWidth) / labelWidth).toInt()
-                } else {
-                    0
-                }
-                var startIndex = (coin.coinPriceHistory.lastIndex - amountOfVisibleDataPoints)
-                    .coerceAtLeast(0)
-                LineChart(
-                    dataPoints = coin.coinPriceHistory,
-                    style = ChartStyle(
-                        chartLineColor = MaterialTheme.colorScheme.primary,
-                        unselectedColor = MaterialTheme.colorScheme.secondary,
-                        selectecColor = MaterialTheme.colorScheme.primary,
-                        hyperLinesThicknessPx = 5f,
-                        axisLineThicknessPx = 5f,
-                        lableFontSize = 12.sp,
-                        minYLableSpacing = 25.dp,
-                        verticalPadding = 8.dp,
-                        horizantalPadding = 8.dp,
-                        xAxisLableSpacing = 8.dp,
-                    ),
-                    visibleDataPointsIndices = startIndex..coin.coinPriceHistory.lastIndex,
-                    unit = "$",
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .aspectRatio(16/9f)
-                        .onSizeChanged { totalChartWidth = it.width.toFloat() },
+            var isChartVisible by remember { mutableStateOf(false) }
 
-                    selectedDataPoint = selectedDataPoint,
-                    onSelectedDataPoint = {
-                        selectedDataPoint = it
-                    },
-                    onXLabelWidthChange = {
-                        labelWidth = it
+            Column {
+                // Button to toggle visibility of the chart
+                Button(onClick = { isChartVisible = !isChartVisible }) {
+                    Text(text = if (isChartVisible) "Hide Graph" else "Show Graph")
+                }
+
+                // Conditionally show the chart when isChartVisible is true
+                AnimatedVisibility(visible = isChartVisible) {
+                    var selectedDataPoint by remember { mutableStateOf<DataPoint?>(null) }
+                    var labelWidth by remember { mutableStateOf(0f) }
+                    var totalChartWidth by remember { mutableFloatStateOf(0f) }
+
+                    val amountOfVisibleDataPoints = if (labelWidth > 0) {
+                        ((totalChartWidth - 2.5 * labelWidth) / labelWidth).toInt()
+                    } else {
+                        0
                     }
-                )
+
+                    var startIndex = (coin.coinPriceHistory.lastIndex - amountOfVisibleDataPoints)
+                        .coerceAtLeast(0)
+
+                    LineChart(
+                        dataPoints = coin.coinPriceHistory,
+                        style = ChartStyle(
+                            chartLineColor = MaterialTheme.colorScheme.primary,
+                            unselectedColor = MaterialTheme.colorScheme.secondary,
+                            selectecColor = MaterialTheme.colorScheme.primary,
+                            hyperLinesThicknessPx = 5f,
+                            axisLineThicknessPx = 5f,
+                            lableFontSize = 12.sp,
+                            minYLableSpacing = 25.dp,
+                            verticalPadding = 8.dp,
+                            horizantalPadding = 8.dp,
+                            xAxisLableSpacing = 8.dp,
+                        ),
+                        visibleDataPointsIndices = startIndex..coin.coinPriceHistory.lastIndex,
+                        unit = "$",
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .aspectRatio(16 / 9f)
+                            .onSizeChanged { totalChartWidth = it.width.toFloat() },
+
+                        selectedDataPoint = selectedDataPoint,
+                        onSelectedDataPoint = {
+                            selectedDataPoint = it
+                        },
+                        onXLabelWidthChange = {
+                            labelWidth = it
+                        }
+                    )
+                }
             }
+
 
         }
 

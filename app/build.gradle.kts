@@ -62,8 +62,9 @@ dependencies {
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.bundles.compose)
     implementation(libs.androidx.storage)
+    implementation(libs.androidx.navigation.runtime.ktx)
+    implementation(libs.androidx.navigation.compose)
     debugImplementation(libs.bundles.compose.debug)
-
     coreLibraryDesugaring(libs.desugar.jdk.libs)
 
     implementation(libs.bundles.koin)

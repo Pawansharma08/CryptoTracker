@@ -1,35 +1,23 @@
 package com.example.cryptotracker.crypto.presentation.coin_list
 
-import android.widget.Toast
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Text
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.compose.LocalLifecycleOwner
-import androidx.lifecycle.repeatOnLifecycle
-import com.example.cryptotracker.core.presentation.util.toString
 import com.example.cryptotracker.crypto.presentation.coin_list.components.CoinListItem
 import com.example.cryptotracker.crypto.presentation.coin_list.components.previewCoin
-import com.example.cryptotracker.crypto.presentation.models.CoinUi
 import com.example.cryptotracker.ui.theme.CryptoTrackerTheme
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.emptyFlow
-import kotlinx.coroutines.withContext
 
 @Composable
 fun CoinListScreen(
@@ -37,31 +25,48 @@ fun CoinListScreen(
     onAction: (CoinListAction) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    if (state.isLoading) {
-        Box(
-            modifier = modifier
-                .fillMaxSize(),
-            contentAlignment = Alignment.Center
-        ) {
-            CircularProgressIndicator()
-        }
+    var searchQuery by remember { mutableStateOf(TextFieldValue("")) }
+    val filteredCoins = state.coins.filter { coin ->
+        coin.name.contains(searchQuery.text, ignoreCase = true)
+    }
 
-    } else {
-        LazyColumn(
-            modifier = modifier
-                .fillMaxSize(),
-            verticalArrangement = Arrangement.spacedBy(8.dp),
-        ) {
-            items(state.coins) { coinUi ->
-                CoinListItem(
-                    coinUi = coinUi,
-                    onClick = {
-                        onAction(CoinListAction.OnCoinClick(coinUi))
-                    },
-                    modifier = Modifier.fillMaxWidth()
+    Column(
+        modifier = modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.background)
+    ) {
+        // Search TextField
+        OutlinedTextField(
+            value = searchQuery,
+            onValueChange = { newValue -> searchQuery = newValue },
+            label = { Text("Search by name") },
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(8.dp)
+        )
 
-                )
-
+        if (state.isLoading) {
+            Box(
+                modifier = Modifier
+                    .fillMaxSize(),
+                contentAlignment = Alignment.Center
+            ) {
+                CircularProgressIndicator()
+            }
+        } else {
+            LazyColumn(
+                modifier = Modifier.fillMaxSize(),
+                verticalArrangement = Arrangement.spacedBy(8.dp),
+            ) {
+                items(filteredCoins) { coinUi ->
+                    CoinListItem(
+                        coinUi = coinUi,
+                        onClick = {
+                            onAction(CoinListAction.OnCoinClick(coinUi))
+                        },
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                }
             }
         }
     }
@@ -74,13 +79,10 @@ private fun CoinListScreenPreview() {
         CoinListScreen(
             state = CoinListState(
                 coins = (1..100).map {
-                    previewCoin.copy(id = it.toString())
+                    previewCoin.copy(id = it.toString(), name = "Coin $it")
                 }
             ),
-            modifier = Modifier
-                .background(MaterialTheme.colorScheme.background),
             onAction = {}
         )
     }
-
 }

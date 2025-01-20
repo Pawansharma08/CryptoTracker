@@ -63,7 +63,9 @@ fun AdaptiveCoinListDetailPane(
         } ,
         detailPane = {
             AnimatedPane {
-                CoinDetailScreen(state = state)
+                CoinDetailScreen(
+                    state = state
+                )
             }
         },
         modifier = modifier
