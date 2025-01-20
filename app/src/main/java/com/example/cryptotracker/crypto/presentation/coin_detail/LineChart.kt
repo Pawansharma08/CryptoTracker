@@ -1,4 +1,4 @@
-package com.example.cryptotracker.crypto.presentation.coin_detail
+ package com.example.cryptotracker.crypto.presentation.coin_detail
 
 import android.provider.ContactsContract.Data
 import androidx.compose.foundation.Canvas
